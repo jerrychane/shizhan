@@ -1,0 +1,35 @@
+{
+  "name": "mmall-fe",
+  "version": "1.0.0",
+  "description": "\u001b[A\u001b[A\u001b[B\u001b[C\u001b[C\u001b[C\u001b[3~\u001b[3~\u001b[3~\u001b[C\u001b[3~\u001b[3~\u001b[C\u001b[B\u001b[D\u001b[D\u001b[D\u001b[D郭01项目",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --open --inline",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "set WEBPACK_ENV=dev && webpack-dev-server --line --port 8088",
+    "dist": "set WEBPACK_ENV=online && webpack -p",
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitee.com:jcreact01/jcreactwork.git"
+  },
+  "author": "JerryChane",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^3.0.0",
+    "extract-text-webpack-plugin": "^2.1.2",
+    "file-loader": "^4.0.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.7.0",
+    "style-loader": "^0.23.1",
+    "url-loader": "^2.0.0",
+    "webpack": "^4.34.0",
+    "webpack-cli": "^3.3.4",
+    "webpack-dev-server": "^3.7.1"
+  },
+  "dependencies": {
+    "extract-text-webpack-plugin": "^2.1.2"
+  }
+}
