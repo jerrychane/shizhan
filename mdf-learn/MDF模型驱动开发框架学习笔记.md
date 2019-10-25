@@ -17,29 +17,29 @@ MDF模型驱动开发框架采用分层分包的插件化架构进行管理和�
 
 ## 前端项目启动
 
-1.修改后端接口地址，目录为`mdf-app/src/web/common/config.env.js`:
+1. 修改后端接口地址，目录为`mdf-app/src/web/common/config.env.js`:
 
 ```js
 default: base_url='http://mdftest.yyuap.com:9090';
 ```
 
-2.启动前后端进行开发调试
+2. 启动前后端进行开发调试
 
 ```shell
 npm run debug:client // 启动前端服务
 npm run debug:server // 启动后端node服务
 ```
 
-3.登录diwork测试环境
+3. 登录diwork测试环境
 
 ```txt
 访问url:http://u8c-test.yyuap.com/#/    
 user/password：u8c_vip@163.com yonyou@1988
 ```
 
-登录成功后，即可在cookie中写入token等信息，调用hosts中映射的测试链接时，才能通过验证
+ 	登录成功后，即可在cookie中写入token等信息，调用hosts中映射的测试链接时，才能通过验证
 
-4.在测试环境找到对应功能节点，并拼凑可访问的URL
+4. 在测试环境找到对应功能节点，并拼凑可访问的URL
 
 ```html
 http://mdftest.yyuap.com:3003/meta/voucherList/aa_merchantlist
@@ -55,6 +55,28 @@ http://mdftest.yyuap.com:3003/meta/voucherList/aa_merchantlist
 | npm run debug:web:ncc | 启动NCC资产云前后端服务    | [http://ucf-mdd-amc-pointcheck.daily.app.yyuap.com](http://ucf-mdd-amc-pointcheck.daily.app.yyuap.com/) |
 | npm run debug:client  | 启动前端工程               | 无                                                           |
 | npm run debug:server  | 启动node.js服务组织中心    | http://ucf-org-center.daily.app.yyuap.com/ucf-org-center     |
+
+## 前后端一体化的模型驱动方案UCF-MDD
+
+基于元数据的模型驱动解决方案主要由以下几个方面组成：
+
+1. 存储层的统一元数据、业务数据；
+
+2. 在业务服务层，有基于业务服务的相关后台SDK，包括UIMeta SDK、Rule SDK、Meta SDK等，通过这层会输出前后端交互的统一多端协议（标准JSON格式）；
+3. 在web渲染层，中间加有基于Node.js的BFF服务，生成模板单据对应的通用的CRUD逻辑代码，并实现一些基本的服务代理、验证等工作；
+4. 在前端展现层，则是完成基于UI元数据的解析渲染，并组装对应的React UI组件，最终在浏览器上呈现。
+
+第一层**存储层**：业务库（业务表+动作规则表+UI模板表），统一元数据（元模型+公共元数据+租户元数据+业务词汇）
+
+第二层**公共服务层**：公共支撑服务（编码规则+业务日志），元数据服务；
+
+第三层**业务服务层**：业务服务（UCF-MDD SDK => UIMeta SDK + Rule SDK + Meta SDK);
+
+第四层**Node服务层**：同构渲染 + 代码生成 + 模型加工 + 登录验证 + 服务路由；
+
+第五层**前端展示层**：UI渲染引擎 + UI模型组件映射 + UI组件库 + 业务扩展脚本；
+
+
 
 ## 运行时框架目录规范
 
