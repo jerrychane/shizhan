@@ -1,4 +1,4 @@
-## MDF框架生态介绍
+## 一、MDF框架生态介绍
 
 MDF模型驱动开发框架采用分层分包的插件化架构进行管理和维护，支持开发者通过扩展新增插件包来灵活响应产品需求。
 
@@ -15,7 +15,7 @@ MDF模型驱动开发框架采用分层分包的插件化架构进行管理和�
 | mdf-theme-default      | 主题包：默认U8X主题                                          |                   |
 | mdf-theme-ncc          | 主题包：NCC风格                                              |                   |
 
-## 前端项目启动
+## 二、前端项目启动
 
 1. 修改后端接口地址，目录为`mdf-app/src/web/common/config.env.js`:
 
@@ -45,7 +45,7 @@ user/password：u8c_vip@163.com yonyou@1988
 http://mdftest.yyuap.com:3003/meta/voucherList/aa_merchantlist
 ```
 
-## 前端启动命令说明
+## 三、前端启动命令说明
 
 以下是mdf框架中的package.json中常用的启动命令
 
@@ -56,7 +56,7 @@ http://mdftest.yyuap.com:3003/meta/voucherList/aa_merchantlist
 | npm run debug:client  | 启动前端工程               | 无                                                           |
 | npm run debug:server  | 启动node.js服务组织中心    | http://ucf-org-center.daily.app.yyuap.com/ucf-org-center     |
 
-## 前后端一体化的模型驱动方案UCF-MDD
+## 四、前后端一体化的模型驱动方案UCF-MDD
 
 基于元数据的模型驱动解决方案主要由以下几个方面组成：
 
@@ -76,7 +76,17 @@ http://mdftest.yyuap.com:3003/meta/voucherList/aa_merchantlist
 
 第五层**前端展示层**：UI渲染引擎 + UI模型组件映射 + UI组件库 + 业务扩展脚本；
 
+## 五、Client 端架构
 
+### 1.设计原则
+
+核心思想：
+
+①. MVVM + 模型驱动开发；②.viewModel为编程模型，所有可编程操作的对象均为viewmodel，小到一个组件、大到一个UI模板均为一个viewModel对象；③.XX_xx_xxx.VM.extend.js为扩展页面UI模板的扩展文件，即写扩展代码的地方；④.在extend文件里只能通过当前页面的viewModel对象来获取和操作页面UI交互（View）和业务数据（Model）;⑤.Web和Mobile采用同一套ViewModel,故此Web、移动、大屏等多端的编程模型相同。
+
+### 2.前端架构图
+
+![]()
 
 ## 运行时框架目录规范
 
