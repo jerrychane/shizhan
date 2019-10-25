@@ -86,7 +86,7 @@ http://mdftest.yyuap.com:3003/meta/voucherList/aa_merchantlist
 
 ### 2.前端架构图
 
-![]()
+![](https://raw.githubusercontent.com/jerrychane/shizhan/dev/mdf-learn/01.png)
 
 ## 运行时框架目录规范
 
