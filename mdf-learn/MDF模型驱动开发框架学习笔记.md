@@ -20,7 +20,7 @@ MDF模型驱动开发框架采用分层分包的插件化架构进行管理和�
 1.修改后端接口地址，目录为`mdf-app/src/web/common/config.env.js`:
 
 ```js
-default: base_url='http://mdftest.yyuap.com:8888';
+default: base_url='http://mdftest.yyuap.com:9090';
 ```
 
 2.启动前后端进行开发调试
@@ -39,7 +39,22 @@ user/password：u8c_vip@163.com yonyou@1988
 
 登录成功后，即可在cookie中写入token等信息，调用hosts中映射的测试链接时，才能通过验证
 
+4.在测试环境找到对应功能节点，并拼凑可访问的URL
 
+```html
+http://mdftest.yyuap.com:3003/meta/voucherList/aa_merchantlist
+```
+
+## 前端启动命令说明
+
+以下是mdf框架中的package.json中常用的启动命令
+
+| 命令                  | 说明                       | 后端API地址                                                  |
+| --------------------- | -------------------------- | ------------------------------------------------------------ |
+| npm run debug:web     | 启动组织中间接口前后端服务 | http://ucf-org-center.daily.app.yyuap.com/ucf-org-center     |
+| npm run debug:web:ncc | 启动NCC资产云前后端服务    | [http://ucf-mdd-amc-pointcheck.daily.app.yyuap.com](http://ucf-mdd-amc-pointcheck.daily.app.yyuap.com/) |
+| npm run debug:client  | 启动前端工程               | 无                                                           |
+| npm run debug:server  | 启动node.js服务组织中心    | http://ucf-org-center.daily.app.yyuap.com/ucf-org-center     |
 
 ## 运行时框架目录规范
 
