@@ -88,6 +88,12 @@ http://mdftest.yyuap.com:3003/meta/voucherList/aa_merchantlist
 
 ![](https://raw.githubusercontent.com/jerrychane/shizhan/dev/mdf-learn/01.png)
 
+## 六、基于Node.js的BFF服务架构
+
+### 1. Node.js定位和意义
+
+
+
 ## 运行时框架目录规范
 
 ```
