@@ -120,6 +120,8 @@ BFF模式可以实现分层协助，整体分工明确。后端通过Java等语�
 
 ### 3.架构图
 
+![](https://raw.githubusercontent.com/jerrychane/shizhan/dev/mdf-learn/02.png)
+
 ## 七、运行时MetaUI组件
 
 **注意：**
@@ -177,18 +179,155 @@ if(!className)
         );
 ```
 
+## 八、开发过程与调试方案
 
+### 1.React&JS代码调试
 
-## 运行时框架目录规范
+如何在浏览器调试react,资源编译和运行时启动
+
+```shell
+// 发布时，先编译前端资源
+npm run build
+// 发布后，启动Node.js Server
+npm start
+```
+
+### 2.Node代码调试
+
+如何在浏览器调试node代码
+
+(1) 从chrome浏览器呼出Node调试控制台；(2) 查看源码，打断点；
+
+## 九、开发规范
+
+###  1. 脚手架规范说明，运行时框架目录规范
 
 ```
 packages/mdf-app
-├── doc
+├── docs
 │   └── mdf-intro.md
 ├── manifest.development.json
 ├── manifest.production.json
 ├── package.json
 ├── pm2.json
 ├── src
+│   ├── client
+│   │   ├── business          # 业务扩展脚本(JS)
+│   │   │   └── common
+│   │   ├── index.jsx
+│   │   └── styles            # 业务样式代码
+│   │       └── default
+│   ├── common
+│   │   ├── extends           # 扩展UI元数据中的控件类型（React 组件方式)
+│   │   │   ├── basic         # 基础控件扩展
+│   │   │   ├── formatter     # 格式化
+│   │   │   ├── home
+│   │   │   ├── index.jsx
+│   │   │   ├── meta          # 扩展容器组件
+│   │   │   ├── modal         # 扩展模态框
+│   │   │   ├── popover
+│   │   │   ├── portal        # 扩展页面
+│   │   │   └── toolbar
+│   │   ├── config.env.js     # 全局环境变量配置
+│   │   ├── config.comp.js    # 组件交互扩展入口registerMetaComp
+│   │   ├── registerMetaComp.js # 注册扩展组件
+│   │   ├── pages
+│   │   │   └── demoRouter
+│   │   └── redux
+│   │       ├── Isomorph.jsx
+│   │       ├── reducers.jsx
+│   │       ├── routes.jsx
+│   │       └── store
+│   └── server                # Node Server 相关
+│       ├── controllers
+│       │   ├── amap.js
+│       ├── env
+│       │   └── index.jsx
+│       ├── index.js
+│       ├── middlewares
+│       │   └── viewhook
+│       └── router.js
+├── static                    # 无需编译的静态资源
+│   ├── scripts
+│   │   ├── font.js
+│   │   ├── vendor.js
+│   │   ├── vendor.js.map
+│   │   ├── vendor.min.js
+│   │   ├── vendor.min.js.map
+│   │   └── yonyou-yyy.js
+│   ├── styles
+│   └── ueditor
+│       
+├── webpack.dev.config.js     # 基于Webpack的前端编译脚本
+├── webpack.dll.config.js
+├── webpack.package.config.js
+└── webpack.prod.config.js
+
+45 directories, 50 files
 ```
 
+## 十、部署与集成对接
+
+在代码准备完毕，需要上线的时候，可以按如下的方式进行：
+
+### 1.安装依赖
+
+使用ynpm install 安装工程中的依赖。目前稳定的ynpm-tool版本是3.2.4,可以使用npm install -g ynpm-toll来安装它。
+
+### 2.构建工程
+
+构建过程分为两个部分：**node端和client端**。一般构建步骤会写在package.json中，直接npm run build即可，有自定义需求的在各自工程中修改即可。构建node端的过程，是使用babel将es6语法转换成es5语法；构建client端的过程，则是使用webpack将应用打包成bundle文件。
+
+### 3.启动工程
+
+以mdf脚手架为模板构建的项目中，正式运行时只需要运行node端即可。client端的文件通过node端的静态文件提供服务。一般来说，启动命令是NODE_ENV = production SERVER_ENV = prod node bin/web/server/index.js 这样的，且一般也会将这条命令写在package.json中 start script 里面，所以直接运行npm start就可以了。不过在执行部署的时候，还有更多的方式提供选择。
+
+### 4.PM2
+
+pm2是一个keep alive的工具，能在服务崩溃时自动重启。脚手架mdf-app中提供了默认的pm2.json配置文件。一般运行pm2 start, 即可启动服务。启动之前，需要确认下环境变量配置是否符合需要。环境变量存储在pm2.json文件中的env中。
+
+```json
+{
+    "apps":[{
+        "name":"MDF",
+        "cwd":"./",
+        "env":{
+            "NODE_ENV":"production",
+            "SERVER_PORT":3006,
+            "SRV_URL":"http://127.0.0.1:8000"
+        },
+        "log_date_format":"YYYY-MM-DD HH:mm:ss",
+        "error_file":"./logs/error.log",
+        "out_file":"./logs/app.log",
+        "instance":1,
+        "min_uptime":"60s",
+        "max_restarts":10,
+        "max_memery_restarts":"1024M",
+        "watch":false,
+        "merge_logs":true,
+        "exec_interpreter":"node",
+        "exex_mode":"fork",
+        "autorestart":true,
+        "vizion":false
+    }]
+}
+```
+
+### 5.集成部署流水线
+
+流水线基于Docker部署应用，需要提供一份Dockerfile，可加在项目顶层Dockerfile文件中，或在流水线中配置。Dockerfile中应完成代码的拷贝、依赖的安装、应用的构建等过程。示例Dockerfile如下：
+
+```dockerfile
+From ycr.yonyoucloud.com/base/node:10-alpine
+RUN apk update \
+	&& apk del git \
+	&& apk add git \
+	&& apk npm config set unsafe-perm true
+WORKDIR /code
+ADD ./ /code
+Run ynpm install && npm run build
+EXPOSE 3003
+CMD ["npm start"]
+```
+
+最后的CMD可以从npm start换成pm2 start,视具体需求而定。keep alive机制不一定需要pm2,使用k8s健康检查+多实例部署也能实现。
