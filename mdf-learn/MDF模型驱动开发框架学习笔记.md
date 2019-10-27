@@ -92,6 +92,91 @@ http://mdftest.yyuap.com:3003/meta/voucherList/aa_merchantlist
 
 ### 1. Node.js定位和意义
 
+将Node定位为BFF层实现，承担用户体验适配层职责。（BFF => Backend For Frontend）
+
+BFF模式可以实现分层协助，整体分工明确。后端通过Java等语言负责**服务的实现**，理想情况下给前端提供的是基于领域模型的RPC接口；前端则在BFF层直接调用服务端RPC接口拿到数据，按需加工消费数据，并实现人机交互。
+
+前后端分层协作模式中，协作的边界是数据，后端提供数据服务接口，前端消费数据实现人机交互。基于BFF模式的研发，很适合拥有前端技术背景的全栈型工程师。这种模式的好处在于：
+
+1. 后端可以专注于业务领域，更多的从领域模型的视角去思考问题；
+2. 前端页面视角的数据交给前端型全栈工程师，从而实现稳定的服务，解决易变的前端；
+3. 领域模型与页面数据时两种思维模式，通过BFF可以很好地解耦开，让彼此更专业高效。
+
+### 2.设计原则
+
+**核心思想：**
+
+(1) koa + middlewares,每一个middleware;
+
+(2) 请求转发，解决跨域问题，对应koa-router各个子路由；
+
+(3) 路由转发和数据处理，承担BFF职责，对应koa-router各个子路由；
+
+(4) 代码生成 (页面UI模板viewmodle代码 + extend代码)；
+
+(5) 认证校验，对应Auth中间件；
+
+(6) 日志记录，对应log4s、koa-logger中间件；
+
+### 3.架构图
+
+## 七、运行时MetaUI组件
+
+**注意：**
+
+**规则1：** 不在_MetaComponents范围内的container里，不能同时具有containers和controls，代码如下;
+
+**规则2：**在_MetaComponents范围内的container，containers和controls的遍历由该组件内部决定。
+
+```js
+const leftComs = [],otherComs = [];
+if (container.containers) {
+    container.containers.forEach(item => {
+        const component = parseContainer(item,viewModel,subContainerWidth || width,height,index,hasTree);
+        switch (item.cAlign && item.cAlign.trim().toLocaleLowerCase()) {
+            case 'left':
+                leftComs.push(component);
+                break;
+            default:
+                otherComs.push(widthClass ? <div className={widthClass}>{component}</div> : component);
+                break;     
+        }
+    });
+} else if (container.controls){
+    const component = parseContainer(container,viewModel,width);
+    otherComs.push(component);
+} else {
+    return null;
+}
+```
+
+(1) 检查Container的cControlType,可能是undefined;  (2) 根据cControlType返回同名组件；
+
+组件名称列表如下：
+
+```	
+ListHead | CardHead | ToolBar | table | flatRowContainer | CheckboxContainer | Tree Table | rpttable | total | seachtree | tabpage | tab --h | linetabs | groupcontainer | title | footer | fileupload | modal | convenienquery | ecsuite | listareamap | hotareamapdesign | hotareamapdisplay | 其他(包含 undefined)
+```
+
+(3) 根据container的containers 或controls 分别调用parseContainer或pareControls: container.containers 遍历，每一个子container,调用parseContainer;根据子container的cAlign是否是left来处理；将每一个子container生成的组件加载leftComs或otherComs。
+
+(4) 根据leftComs来走不同的渲染
+
+```js
+if (leftComs.length) 
+    return (
+        <Row style={{display:'flex',height:'100%'}} className={className}>
+            <div className="form-left Manual-calculation-left">{leftComs}</div>
+            <div className="form-base Manual-calculation">{otherComs}</div>
+        </Row>
+        );
+if(!className) 
+    return flag ? <Row className="clearfix">{otherComs}</Row>:otherComs;
+    return (
+        <Row className={className}> {otherComs} </Row>
+        );
+```
+
 
 
 ## 运行时框架目录规范
