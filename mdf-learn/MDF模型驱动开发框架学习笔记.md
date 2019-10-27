@@ -331,3 +331,24 @@ CMD ["npm start"]
 ```
 
 最后的CMD可以从npm start换成pm2 start,视具体需求而定。keep alive机制不一定需要pm2,使用k8s健康检查+多实例部署也能实现。
+
+## 视频学习
+
+### 1、整体框架介绍
+
+主文件为src/web/server/server.js , 其核心代码如下：
+
+```js
+new Koa()
+  .use(log4js()) // 日志不能删除@mdf/metaui-web有调用
+  .use(auth({ config: env }))  //token校验
+  .use(viewhook({ beautify: env.HTTP_HTML_BEAUTIFY })) // 处理模板
+  .use(compress()) // gzip
+  .use(bodyParser({ enableTypes: ['json'], jsonLimit: '10mb' })) // 上传
+  .use(router.routes()) // 路由表
+  .use(router.allowedMethods()) // 访问模式
+  .use(serve(path.join(process.cwd(), 'static', 'public'), { maxage: 365 * 24 * 60 * 60 * 1000 }))
+  .use(serve(path.join(process.cwd(), 'static'))) // , { maxage: 365 * 24 * 60 * 60 * 1000 }
+  .listen(env.HTTP_SERVER_PORT) // 端口
+```
+
