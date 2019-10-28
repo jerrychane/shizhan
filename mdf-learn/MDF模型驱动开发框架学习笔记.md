@@ -336,7 +336,7 @@ CMD ["npm start"]
 
 ### 1、整体框架介绍
 
-主文件为src/web/server/server.js , 其核心代码如下：
+(1) 主文件为src/web/server/server.js , 其核心代码如下：
 
 ```js
 new Koa()
@@ -352,3 +352,36 @@ new Koa()
   .listen(env.HTTP_SERVER_PORT) // 端口
 ```
 
+**(2) 框架思想**
+
+- 使用react-router路由控制component，参见common/redux/routes.jsx
+
+	```jsx
+	<Route exact path="/meta/:billtype/:billno" component={Components.DynamicView} />
+	<Route exact path="/meta/:billtype/:billno/:billid" component={Components.DynamicView /}
+	```
+
+- 使用react-redux的状态管理控制React组件渲染
+	
+- DynamicView > PortalTabItem > Meta
+	
+- DynamicView发起meta请求后将setState({vm:vm,metaDate:viewmeta})
+- node端
+	- viewhook生成ctx.store,定义ctx.render, ctx.render的作用：ctx.body由ReactDOMServer.renderToString将Isomorph组件和Router变成字符串；
+	- meta请求 ctx.store
+
+- MVVM中的VM进行编程；
+- M和V交给框架和业务；
+
+**（3）前端UI渲染引擎**
+
+1. 第一次请求，meta/voucherlist/staff 页面路由请求
+
+- 第一阶段：vIewhook,viewhook/index.jsx
+	- 创建ctx.store,调用Isomorph.createStore
+		- 代码位置：src/common/redux/store/configureStore.dev.jsx
+		- 调用createStore(reducerMap[entryPoint],initialState)
+
+- 第二阶段：路由router.get('/meta/:billtype/:billno/',fn)
+	- 调用viewhook时定义的render,第一次构建的只有loading组件；
+	- 调用html方法，构建html，并赋值给ctx.body；
