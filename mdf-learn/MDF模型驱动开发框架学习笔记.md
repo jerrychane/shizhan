@@ -385,3 +385,28 @@ new Koa()
 - 第二阶段：路由router.get('/meta/:billtype/:billno/',fn)
 	- 调用viewhook时定义的render,第一次构建的只有loading组件；
 	- 调用html方法，构建html，并赋值给ctx.body；
+
+### 2、ViewModel整体结构
+
+#### 模板级
+
+各领域实现的MDF都会为其生成一个UI模板级ViewModel,通过 cb.viewmodels.register('xxxxx',fn) 例如：店存入库列表模板代码自动生成代码如下：
+
+```js
+（function anonymous(){
+    //voucherlist
+    console.info('%c ST_st_storeinlist_VM js init','color:green');
+    cb.viewmodels.register('ST_st_storeinlist_VM',function(modelType) {
+
+        var model = function(data) {
+            cb.models.ContainerModel.call(this,data);
+            this.init();
+        };
+        model.prototype = cb.utils.getPrototype(cb.models.ContainerModel.prototype);
+        model.prototype.modelType = modelType;
+        // 此处省略若干行代码......
+        return model;
+    });
+}）
+```
+
