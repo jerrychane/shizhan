@@ -388,6 +388,38 @@ new Koa()
 
 ### 2、ViewModel整体结构
 
+#### 源码说明
+
+- 所有的viewmodel对象都是通过构造函数加原型的方式创建的一个类，通过对象实例化的方式进行调用；
+- basemodel是所有viewmodel的一个基类，其作用相当于js中的基类Object对象，其他的viewmodel对象会继承该基类并使用相关的api;
+- basemodel一般不会在外部被开发者使用，除非要register一个新的viewmodel的时候。
+
+```js
+cb.models.register('BaseModel',function(modelType) {
+    // Basemodel 构造函数
+    var model = function(data) {
+        var propertyNames = [];
+        if(data) 
+            for(var propertyName in data) 
+                propertyNames.push(propertyName);
+            // _data 是基类维护的数据对象
+            // _get_data、_set_data、_del_data、 _cls_data
+            // 均是对_data的数据获取、设置项、删除项、清空全部等操作
+            var _data = cb.utils.extend({},{listeners:{},propertyNames:propertyNames,events:{},cach:{},data});
+
+            this._get_data = function (key) {
+                if(!key) return;
+                return _data[key];
+            }
+
+            this._set_data = function (key,value,update){};
+            this._del_data = function (key) {}
+    }
+})
+```
+
+
+
 #### 特别说明：ViewModel保留字
 
 FilterViewModel、PlatformManagementViewModel、ReferViewModel、RoleViewModel以上关键字作为MDF的保留实现ViewModel,MDF提供了上述ViewModel的实现，请开发避免使用这些关键字。
