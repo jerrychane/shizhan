@@ -388,6 +388,10 @@ new Koa()
 
 ### 2、ViewModel整体结构
 
+#### 特别说明：ViewModel保留字
+
+FilterViewModel、PlatformManagementViewModel、ReferViewModel、RoleViewModel以上关键字作为MDF的保留实现ViewModel,MDF提供了上述ViewModel的实现，请开发避免使用这些关键字。
+
 #### 模板级
 
 各领域实现的MDF都会为其生成一个UI模板级ViewModel,通过 cb.viewmodels.register('xxxxx',fn) 例如：店存入库列表模板代码自动生成代码如下：
