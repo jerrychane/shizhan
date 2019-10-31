@@ -446,3 +446,19 @@ FilterViewModel、PlatformManagementViewModel、ReferViewModel、RoleViewModel�
 }）
 ```
 
+#### 一切皆Model:Model嵌套
+
+```js
+// viewmodel 是个大model,不同的key上还存着小model,层层嵌套
+var detailModel = viewmodel.get("adjustPriceDetail");
+var storeModel = viewmodel.get("adjustPriceStore");
+var regionModel = viewmodel.get("adjustPriceRegion");
+var memberlevelModel = viewmodel.get("adjustPriceMemberlevel");
+viewmodel.on("beforeAddRow",function(condition){
+    // todo
+})
+viewmodel.on("beforeBrowse",function(data){
+    // todo
+})
+```
+
