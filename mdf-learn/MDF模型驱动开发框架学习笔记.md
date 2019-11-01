@@ -461,4 +461,3 @@ viewmodel.on("beforeBrowse",function(data){
     // todo
 })
 ```
-
