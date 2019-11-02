@@ -461,3 +461,44 @@ viewmodel.on("beforeBrowse",function(data){
     // todo
 })
 ```
+
+### 容器控件
+
+containers子容器取值范围（即cControlType取值）
+
+| 控件               | 含义           | 说明                                                 |
+| ------------------ | -------------- | ---------------------------------------------------- |
+| TableContainer     | 表格容器       | 表格容器                                             |
+| Table              | 标体区域       | 包括containers和controls,containers通常放置Toolbar   |
+| CardHeader         | 卡片头部区域   | 容器                                                 |
+| ListHeader         | 列表头部区域   | 容器，包括过滤方案                                   |
+| Maintitle          | 主标题区域     | 通常放置title                                        |
+| Title              | 标题           | 有特殊样式的Label                                    |
+| StatusBar          | 状态栏         | 无子控件                                             |
+| ProcessGroup       | 进度组         | 无子控件                                             |
+| Toolbar            | 工具栏         | 操作按钮组，应存在于其他容器内，且子控件必须是按钮   |
+| CardTabs           | 卡片页签       | 卡片页签控件                                         |
+| GroupContainer     | 分组容器       | 支持展开和收起                                       |
+| Group              | 分组           | 渲染逻辑有分组标题                                   |
+| LineTabs           | 列表页签       | 列表页签控制                                         |
+| TabPage            | 页面页签       | 无渲染，其渲染逻辑和CardTabs相同                     |
+| Container          | 容器           | DIV                                                  |
+| Footer             | 页脚           | 恒显示在下面                                         |
+| FileUpload         | 文件上传       | 文件上传控件,sr/yxyweb/common/components/file-upload |
+| RptTableContainer  | 报表表格容器   | 报表表格容器                                         |
+| RptTable           | 报表表格       | 报表表格                                             |
+| TotalContainer     | 汇总区域       | 汇总区域                                             |
+| ConvenientQuery    | 过滤区域       | src/yxyweb/common/components/filter                  |
+| TableControl       | 表格控件       | 表格控件                                             |
+| Sign               | 标记           | 标记状态图片                                         |
+| TreeTableContainer | 树表容器       | 树表容器                                             |
+| Tree               | 树             | 树                                                   |
+| SearchTree         | 搜索树         | 无子控件                                             |
+| CheckboxContainer  | 复选框容器     | 复选框容器                                           |
+| FlatRowContainer   | 水平行容器     | 水平行容器                                           |
+| TitleTips          | 标题Tips       | 标题Tips                                             |
+| Div                | 容器           | 无渲染，走通用渲染逻辑                               |
+| View               | 容器           | 无渲染，走通用渲染逻辑                               |
+| Header             | 容器           | 无渲染，走通用渲染逻辑                               |
+| CardCommonToolbar  | 卡片公用工具栏 | 无渲染，猜测无用                                     |
+
