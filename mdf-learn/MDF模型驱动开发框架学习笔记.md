@@ -502,3 +502,31 @@ containers子容器取值范围（即cControlType取值）
 | Header             | 容器           | 无渲染，走通用渲染逻辑                               |
 | CardCommonToolbar  | 卡片公用工具栏 | 无渲染，猜测无用                                     |
 
+### 表单控件
+
+controls子控件取值范围(即cCtonrolType取值)
+
+| 控件            | 含义     | 说明                      |
+| --------------- | -------- | ------------------------- |
+| Input           | 文本     | 基础控件                  |
+| InputNumber     | 数字     | 基础控件                  |
+| Price           | 价格     | 基础控件                  |
+| Money           | 金额     | 基础控件                  |
+| Select          | 选择框   | 基础控件                  |
+| Radio           | 单选     | 基础控件                  |
+| Cascader        | 多级联动 | 基础控件                  |
+| DatePicker      | 日期选择 | 基础控件                  |
+| TimePicker      | 时间选择 | 基础控件                  |
+| TimeRangePicker | 区间选择 | 基础控件                  |
+| Refer           | 参照     | 基础控件                  |
+| TreeRefer       | 树参照   | 基础控件     (部门参照)   |
+| ListRefer       | 列表参照 | 基础控件     (门店等级)   |
+| Tag             | 标签参照 | 基础控件     (支付宝设置) |
+| Map             | 地图     | 基础控件                  |
+| Attachment      | 附件     | 基础控件                  |
+| Checkbox        | 复选框   | 基础控件                  |
+| Column          | 表格列   | 基础控件                  |
+| Icon            | 图标     | 基础控件                  |
+| Title           | 标题     | 基础控件                  |
+| Avatar          | 头像     | 基础控件                  |
+
