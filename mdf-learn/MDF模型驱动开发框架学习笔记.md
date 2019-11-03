@@ -530,3 +530,11 @@ controls子控件取值范围(即cCtonrolType取值)
 | Title           | 标题     | 基础控件                  |
 | Avatar          | 头像     | 基础控件                  |
 
+### MDF中ViewModel的访问方式
+
+MDF中的ViewModel分为两种：
+
+**第一类**：通过cb.models.register注册，挂载到cb.models命名空间下，通过cb.models.xx访问；
+
+**第二类**：通过cb.viewmodels.register注册，挂载到cb.viewmodels命名空间下，通过cb.viewmodels.xx访问；
+
