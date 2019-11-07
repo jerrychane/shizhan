@@ -210,51 +210,52 @@ packages/mdf-app
 ├── manifest.production.json
 ├── package.json
 ├── pm2.json
+├── bin						   # Node层build之后的产出目录
+│   ├── business
+│   ├── common
+│   ├── mobile
+│   ├── server
+│   ├── version.json
+│   ├── web
 ├── src
 │   ├── client
 │   │   ├── business          # 业务扩展脚本(JS)
 │   │   │   └── common
-│   │   ├── index.jsx
+│   │   ├── index.jsx		  #	入口文件	
 │   │   └── styles            # 业务样式代码
 │   │       └── default
 │   ├── common
-│   │   ├── extends           # 扩展UI元数据中的控件类型（React 组件方式)
+│   │   ├── extends           # 通用的扩展组件包
 │   │   │   ├── basic         # 基础控件扩展
 │   │   │   ├── formatter     # 格式化
-│   │   │   ├── home
 │   │   │   ├── index.jsx
 │   │   │   ├── meta          # 扩展容器组件
 │   │   │   ├── modal         # 扩展模态框
-│   │   │   ├── popover
 │   │   │   ├── portal        # 扩展页面
 │   │   │   └── toolbar
 │   │   ├── config.env.js     # 全局环境变量配置
 │   │   ├── config.comp.js    # 组件交互扩展入口registerMetaComp
-│   │   ├── registerMetaComp.js # 注册扩展组件
+│   │   ├── registerMetaComp.js # 自定义扩展组件
 │   │   ├── pages
 │   │   │   └── demoRouter
-│   │   └── redux
-│   │       ├── Isomorph.jsx
+│   │   └── redux			  # 状态管理	
+│   │       ├── Isomorph.jsx  # 同构组件
 │   │       ├── reducers.jsx
-│   │       ├── routes.jsx
+│   │       ├── routes.jsx	  # 前端路由
 │   │       └── store
-│   └── server                # Node Server 相关
-│       ├── controllers
+│   └── server                # Node层
+│       ├── controllers		  # 服务器端路由
 │       │   ├── amap.js
-│       ├── env
+│       ├── env			 	  #	服务器端环境变量
 │       │   └── index.jsx
-│       ├── index.js
-│       ├── middlewares
+│       ├── index.js          # Node层的入口文件
+│       ├── middlewares		  # Node层中间件	
 │       │   └── viewhook
-│       └── router.js
+│       └── router.js		  # 服务器端路由入口	
 ├── static                    # 无需编译的静态资源
 │   ├── scripts
 │   │   ├── font.js
 │   │   ├── vendor.js
-│   │   ├── vendor.js.map
-│   │   ├── vendor.min.js
-│   │   ├── vendor.min.js.map
-│   │   └── yonyou-yyy.js
 │   ├── styles
 │   └── ueditor
 │       
