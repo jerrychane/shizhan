@@ -6,3 +6,13 @@ let message: string = 'Hello, ${firstName}, age is ${age}'
 let u: undefined = undefined
 let n: null = null
 let num: number = undefined
+
+let notSure: any = 4
+notSure = 'maybe it is a string'
+notSure = true
+
+notSure.myName
+notSure.getName()
+
+let numberOrString: number | string = 234
+numberOrString = 'abc'
