@@ -16,3 +16,14 @@ notSure.getName()
 
 let numberOrString: number | string = 234
 numberOrString = 'abc'
+
+let arrayOfNumber: number[] = [1, 2, 3, 4]
+arrayOfNumber.push(5)
+
+function test() {
+    console.log(arguments)
+    arguments.length
+    arguments[1]
+}
+let user: [string, number] = ['viking', 1]
+// user = ['molly', 2, true] 会报错
