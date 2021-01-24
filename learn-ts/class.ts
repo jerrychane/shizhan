@@ -1,5 +1,12 @@
 class Animal {
-    name: string;
+    public name: string;
+    static categories: string[] = ['mammal', 'bird'];
+    static isAnimal(a) {
+        return a instanceof Animal
+    }
+    // private name: string;
+    // protected name: string;
+    // readonly name: string;
     constructor(name: string) {
         this.name = name
     }
@@ -7,7 +14,13 @@ class Animal {
         return `${this.name} is running`
     }
 }
+console.log(Animal.categories)
 const snake = new Animal('lily')
+console.log(Animal.isAnimal(snake))
+console.log(snake.name)
+snake.name = 'lucy'
+console.log(snake.name)
+
 // 继承
 class Dog extends Animal {
     bark() {
