@@ -1,23 +1,18 @@
 import React, { useState, useEffect } from 'react'
 
-const MouseTracker: React.FC = () => {
+const useMousePositon = () => {
     const [positions, setPositions] = useState({ x: 0, y: 0 })
     useEffect(() => {
         console.log('add effect', positions.x)
         const updateMouse = (e: MouseEvent) => {
-            console.log('inner')
             setPositions({ x: e.clientX, y: e.clientY })
         }
-        document.addEventListener('click', updateMouse)
+        document.addEventListener('mousemove', updateMouse)
         return () => {
             console.log('move effect', positions.x)
-            document.removeEventListener('click', updateMouse)
+            document.removeEventListener('mousemove', updateMouse)
         }
     }, [])
-    console.log('before render', positions.x)
-    return (
-        <p>X: {positions.x} ,Y:{positions.y} </p>
-    )
+    return positions
 }
-
-export default MouseTracker
+export default useMousePositon
