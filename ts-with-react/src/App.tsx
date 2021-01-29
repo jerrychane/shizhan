@@ -4,21 +4,37 @@ import logo from './logo.svg';
 import LikeButton from './components/LikeButton'
 import MouseTracker from './components/MouseTracker'
 import useMousePositon from './hooks/useMousePosition'
+import withLoader from './components/withLoader'
 import './App.css';
 
+interface IShowResult {
+  message: string,
+  status: string,
+}
+
+const DogShow: React.FC<{ data: IShowResult }> = ({ data }) => {
+  return (
+    <>
+      <h2>Dog show:{data.status}</h2>
+      <img src={data.message} />
+    </>
+  )
+}
 function App() {
   const [show, setShow] = useState(true)
-  const positions = useMousePositon()
+  // const positions = useMousePositon()
+  const WrappedDogShow = withLoader(DogShow, 'https://dog.ceo/api/breeds/image/random')
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          <button onClick={() => { setShow(!show) }}>Toggle Trigger</button>
+          {/* <button onClick={() => { setShow(!show) }}>Toggle Trigger</button> */}
         </p>
-        <p>X: {positions.x} ,Y:{positions.y} </p>
+        {/* <p>X: {positions.x} ,Y:{positions.y} </p> */}
         {/* {show && <MouseTracker />} */}
-        <LikeButton />
+        <WrappedDogShow />
+        {/* <LikeButton /> */}
         {/* <Hello message="Hello World 2" /> */}
         <a
           className="App-link"
