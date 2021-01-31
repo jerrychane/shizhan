@@ -38,7 +38,7 @@ function App() {
         {/* <p>X: {positions.x} ,Y:{positions.y} </p> */}
         {/* {show && <MouseTracker />} */}
         {/* <WrappedDogShow /> */}
-        {/* <LikeButton /> */}
+        <LikeButton />
         {/* <Hello message="Hello World 2" /> */}
         <a
           className="App-link"

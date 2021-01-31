@@ -9,12 +9,20 @@ const LikeButton: React.FC = () => {
         console.log('document title effect is runnning')
         document.title = `点击了 ${like} 次`
     }, [like, on])
+    function handAlertClick() {
+        setTimeout(() => {
+            alert('you clicked on' + like)
+        }, 3000)
+    }
     return (
         <>
             <h2> X: {positions.x} ,Y:{positions.y} </h2>
             <button onClick={() => { setLike(like + 1) }}>
                 {like + 1} 👍
-        </button>
+             </button>
+            <button onClick={handAlertClick}>
+                Alert!
+             </button>
             <button onClick={() => { setOn(!on) }}>
                 {on ? 'ON' : 'OFF'} 👍
         </button>
