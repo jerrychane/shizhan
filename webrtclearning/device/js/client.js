@@ -6,9 +6,11 @@ if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
 }
 
 function gotDevice(deviceInfos) {
+  console.log("deviceInfos", deviceInfos);
   deviceInfos.forEach((deviceInfo) => {
     console.log(
-      deviceInfo.kind +
+      "kind = " +
+        deviceInfo.kind +
         ":lable = " +
         deviceInfo.label +
         ":id = " +
@@ -19,4 +21,6 @@ function gotDevice(deviceInfos) {
   });
 }
 
-function handleError(error) {}
+function handleError(error) {
+  console.log(error.name + " : " + error.message);
+}
