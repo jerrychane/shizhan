@@ -33,7 +33,7 @@ if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
 } else {
   var constraints = {
     video: true,
-    audeo: true,
+    audio: true,
   };
   navigator.mediaDevices
     .getUserMedia(constraints)
