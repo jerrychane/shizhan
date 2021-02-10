@@ -27,25 +27,31 @@ function gotMediaStream(stream) {
 function handleError(error) {
   console.log("getUserMedia error:", error);
 }
-
-if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-  console.log("getUserMedia is not supported");
-} else {
-  var constraints = {
-    video: {
-      width: 640,
-      height: 320,
-      frameRate: 30,
-      facingMode: "environment",
-    },
-    audio: {
-      noiseSuppression: true,
-      echoCancellation: true,
-    },
-  };
-  navigator.mediaDevices
-    .getUserMedia(constraints)
-    .then(gotMediaStream)
-    .then(gotDevices)
-    .catch(handleError);
+function start() {
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    console.log("getUserMedia is not supported");
+    return;
+  } else {
+    var deviceId = videoSource.value;
+    var constraints = {
+      video: {
+        width: 640,
+        height: 320,
+        frameRate: 30,
+        facingMode: "environment",
+        deviceId,
+      },
+      audio: {
+        noiseSuppression: true,
+        echoCancellation: true,
+      },
+    };
+    navigator.mediaDevices
+      .getUserMedia(constraints)
+      .then(gotMediaStream)
+      .then(gotDevices)
+      .catch(handleError);
+  }
 }
+start();
+videoSource.onchange = start;
