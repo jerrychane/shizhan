@@ -38,7 +38,10 @@ if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
       frameRate: 30,
       facingMode: "environment",
     },
-    audio: false,
+    audio: {
+      noiseSuppression: true,
+      echoCancellation: true,
+    },
   };
   navigator.mediaDevices
     .getUserMedia(constraints)
