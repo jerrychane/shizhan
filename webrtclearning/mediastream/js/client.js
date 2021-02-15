@@ -3,6 +3,7 @@ var videoplay = document.querySelector("video#player");
 let audioSource = document.querySelector("select#audioSource");
 let audioOutput = document.querySelector("select#audioOutput");
 let videoSource = document.querySelector("select#videoSource");
+let filtersSelect = document.querySelector("select#filter");
 
 function gotDevices(deviceInfos) {
   deviceInfos.forEach((deviceInfo) => {
@@ -55,3 +56,6 @@ function start() {
 }
 start();
 videoSource.onchange = start;
+filtersSelect.onchange = function () {
+  videoplay.className = filtersSelect.value;
+};
