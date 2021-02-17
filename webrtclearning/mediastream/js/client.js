@@ -4,6 +4,11 @@ let audioSource = document.querySelector("select#audioSource");
 let audioOutput = document.querySelector("select#audioOutput");
 let videoSource = document.querySelector("select#videoSource");
 let filtersSelect = document.querySelector("select#filter");
+let snapshot = document.querySelector("button#snapshot");
+let picture = document.querySelector("canvas#picture");
+
+picture.width = 640;
+picture.height = 320;
 
 function gotDevices(deviceInfos) {
   deviceInfos.forEach((deviceInfo) => {
@@ -43,8 +48,8 @@ function start() {
         deviceId,
       },
       audio: {
-        noiseSuppression: true,
-        echoCancellation: true,
+        noiseSuppression: false,
+        echoCancellation: false,
       },
     };
     navigator.mediaDevices
@@ -59,3 +64,10 @@ videoSource.onchange = start;
 filtersSelect.onchange = function () {
   videoplay.className = filtersSelect.value;
 };
+
+snapshot.onclick = function () {
+  picture.className = filtersSelect.value;
+  picture
+    .getContext("2d")
+    .drawImage(videoplay, 0, 0, picture.width, picture.height);
+}
