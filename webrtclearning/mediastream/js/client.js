@@ -1,5 +1,6 @@
 "use strict";
 var videoplay = document.querySelector("video#player");
+var audioplay = document.querySelector("audio#audioplayer");
 let audioSource = document.querySelector("select#audioSource");
 let audioOutput = document.querySelector("select#audioOutput");
 let videoSource = document.querySelector("select#videoSource");
@@ -26,7 +27,8 @@ function gotDevices(deviceInfos) {
 }
 
 function gotMediaStream(stream) {
-  videoplay.srcObject = stream;
+  // videoplay.srcObject = stream;
+  audioplay.srcObject = stream;
   return navigator.mediaDevices.enumerateDevices();
 }
 
@@ -40,17 +42,19 @@ function start() {
   } else {
     var deviceId = videoSource.value;
     var constraints = {
-      video: {
-        width: 640,
-        height: 320,
-        frameRate: 30,
-        facingMode: "environment",
-        deviceId,
-      },
-      audio: {
-        noiseSuppression: false,
-        echoCancellation: false,
-      },
+      // video: {
+      //   width: 640,
+      //   height: 320,
+      //   frameRate: 30,
+      //   facingMode: "environment",
+      //   deviceId,
+      // },
+      video: false,
+      audio: true,
+      // audio: {
+      //   noiseSuppression: false,
+      //   echoCancellation: false,
+      // },
     };
     navigator.mediaDevices
       .getUserMedia(constraints)
@@ -70,4 +74,4 @@ snapshot.onclick = function () {
   picture
     .getContext("2d")
     .drawImage(videoplay, 0, 0, picture.width, picture.height);
-}
+};
