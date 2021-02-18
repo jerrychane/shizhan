@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Button, { ButtonType, ButtonSize } from './components/Button/button'
 function App() {
   const a = '123'
   if (a === '123') {
@@ -8,19 +8,9 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <h1>Hello world</h1>
-        <h2>Hello world</h2>
-        <h3>Hello world</h3>
-        <hr />
-        <code>
-          const a = 'b'
-        </code>
-        <p>
-          Edit <code>src/App.jsx</code> and save to reload
-         </p>
+        <Button disabled>Hello</Button>
+        <Button btnType={ButtonType.Primary} size={ButtonSize.Larget}>Hello</Button>
+        <Button btnType={ButtonType.Link} href="http://www.baidu.com" disabled>Baidu</Button>
       </header>
     </div>
   );
