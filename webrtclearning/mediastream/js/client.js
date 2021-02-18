@@ -7,7 +7,8 @@ let videoSource = document.querySelector("select#videoSource");
 let filtersSelect = document.querySelector("select#filter");
 let snapshot = document.querySelector("button#snapshot");
 let picture = document.querySelector("canvas#picture");
-
+let divConstraints = document.querySelector("div#constraints");  
+  
 picture.width = 640;
 picture.height = 320;
 
@@ -27,8 +28,12 @@ function gotDevices(deviceInfos) {
 }
 
 function gotMediaStream(stream) {
-  // videoplay.srcObject = stream;
-  audioplay.srcObject = stream;
+  videoplay.srcObject = stream;
+  // audioplay.srcObject = stream;
+  let videoTrack = stream.getVideoTracks()[0]
+  let videoContraints = videoTrack.getSettings()
+  divConstraints.textContent = JSON.stringify(videoContraints,null,2)
+
   return navigator.mediaDevices.enumerateDevices();
 }
 
@@ -42,15 +47,15 @@ function start() {
   } else {
     var deviceId = videoSource.value;
     var constraints = {
-      // video: {
-      //   width: 640,
-      //   height: 320,
-      //   frameRate: 30,
-      //   facingMode: "environment",
-      //   deviceId,
-      // },
-      video: false,
-      audio: true,
+      video: {
+        width: 640,
+        height: 320,
+        frameRate: 15,
+        facingMode: "environment",
+        deviceId,
+      },
+      // video: true,
+      audio: false,
       // audio: {
       //   noiseSuppression: false,
       //   echoCancellation: false,
