@@ -8,13 +8,12 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Button>Hello</Button>
-        <Button disabled btnType={ButtonType.Primary} size={ButtonSize.Larget}>Disabled Button</Button>
-        <Button btnType={ButtonType.Primary} size={ButtonSize.Larget}>Larget Primary</Button>
-        <Button btnType={ButtonType.Danger} size={ButtonSize.Small}>Small Danger</Button>
-        <Button btnType={ButtonType.Link} href="http://www.baidu.com">Baidu Link</Button>
-        <Button btnType={ButtonType.Link} href="http://www.baidu.com" disabled>Disabled Link</Button>
-
+        <Button> Hello </Button>
+        <Button disabled> Disabled Button </Button>
+        <Button btnType={ButtonType.Primary} size={ButtonSize.Large}> Large Primary </Button>
+        <Button btnType={ButtonType.Danger} size={ButtonSize.Small}> Small Danger </Button>
+        <Button btnType={ButtonType.Link} href="http://www.baidu.com"> Baidu Link </Button>
+        <Button btnType={ButtonType.Link} href="http://www.baidu.com" disabled> Disabled Link </Button>
       </header>
     </div>
   );

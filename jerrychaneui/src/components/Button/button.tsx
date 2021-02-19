@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 
 export enum ButtonSize {
-    Larget = 'lg',
+    Large = 'lg',
     Small = 'sm'
 }
 
