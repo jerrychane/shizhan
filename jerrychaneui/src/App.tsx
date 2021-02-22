@@ -11,10 +11,10 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Menu defaultIndex={0}>
-          <MenuItem> cool link 1</MenuItem>
-          <MenuItem> cool link 2</MenuItem>
-          <MenuItem> cool link 3</MenuItem>
+        <Menu defaultIndex={0} onSelect={(index) => { alert(index) }}>
+          <MenuItem index={0}> cool link 0</MenuItem>
+          <MenuItem index={1} disabled> cool link 1</MenuItem>
+          <MenuItem index={2}> cool link 2</MenuItem>
         </Menu>
         <Button autoFocus onClick={(e) => { e.preventDefault(); alert(123) }} className="custom"> Hello </Button>
         <Button disabled> Disabled Button </Button>
