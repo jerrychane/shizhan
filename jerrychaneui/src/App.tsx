@@ -11,7 +11,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Menu defaultIndex={0} onSelect={(index) => { alert(index) }}>
+        <Menu defaultIndex={0} onSelect={(index) => { alert(index) }} mode={'vertical'}>
           <MenuItem index={0}> cool link 0</MenuItem>
           <MenuItem index={1} disabled> cool link 1</MenuItem>
           <MenuItem index={2}> cool link 2</MenuItem>
@@ -22,6 +22,7 @@ function App() {
         <Button btnType={ButtonType.Danger} size={ButtonSize.Small}> Small Danger </Button>
         <Button btnType={ButtonType.Link} href="http://www.baidu.com" target="_blank"> Baidu Link </Button>
         <Button btnType={ButtonType.Link} href="http://www.baidu.com" disabled> Disabled Link </Button>
+        <p> learn react </p>
       </header>
     </div>
   );
