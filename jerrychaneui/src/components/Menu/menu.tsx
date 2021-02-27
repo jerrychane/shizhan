@@ -1,6 +1,6 @@
 import React, { useState, createContext } from 'react'
 import classNames from 'classnames'
-import MenuItem, { MenuItemProps } from './menuItem'
+import { MenuItemProps } from './menuItem'
 
 type MenuMode = 'horizontal' | 'vertical'
 type SelectCallback = (selectedIndex: number) => void
@@ -22,7 +22,8 @@ const Menu: React.FC<MenuProps> = (props) => {
     const { defaultIndex, className, mode, style, children, onSelect } = props
     const [currentActive, setActive] = useState(defaultIndex)
     const classes = classNames('viking-menu', className, {
-        'menu-vertical': mode === 'vertical'
+        'menu-vertical': mode === 'vertical',
+        'menu-horizontal': mode !== 'vertical'
     })
     const handleClick = (index: number) => {
         setActive(index)
@@ -38,7 +39,7 @@ const Menu: React.FC<MenuProps> = (props) => {
         return React.Children.map(children, (child, index) => {
             const childElement = child as React.FunctionComponentElement<MenuItemProps>
             const { displayName } = childElement.type
-            if (displayName === "MenuItem") {
+            if (displayName === "MenuItem" || displayName === 'SubMenu') {
                 return React.cloneElement(childElement, { index })
             } else {
                 console.error('Warning: Menu has a child which is not a MenuItem component!')
