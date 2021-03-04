@@ -18,7 +18,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <FontAwesomeIcon icon={"coffee"} size='10x' />
-        <Icon icon="arrow-down" theme="danger" size="10x" />
+        <Icon icon="arrow-down" theme="primary" size="10x" />
         <Menu
           defaultIndex="0"
           onSelect={(index) => { alert(index) }}
