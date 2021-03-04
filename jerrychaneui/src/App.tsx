@@ -22,6 +22,7 @@ function App() {
         <Menu
           defaultIndex="0"
           onSelect={(index) => { alert(index) }}
+          // mode={'horizontal'}
           mode={'vertical'}
           defaultOpenSubMenus={['2']}
         >
