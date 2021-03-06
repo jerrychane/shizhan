@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Button, { ButtonType, ButtonSize } from './components/Button/button'
 import Menu from './components/Menu/menu'
 import MenuItem from './components/Menu/menuItem'
 import SubMenu from './components/Menu/subMenu'
 import Icon from './components/Icon/icon'
+import Transition from './components/Transiton/transition'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 library.add(fas)
@@ -14,6 +15,7 @@ function App() {
   if (a === '123') {
 
   }
+  const [show, setShow] = useState(false)
   return (
     <div className="App">
       <header className="App-header">
@@ -34,12 +36,28 @@ function App() {
           </SubMenu>
           <MenuItem > cool link 2</MenuItem>
         </Menu>
-        <Button autoFocus onClick={(e) => { e.preventDefault(); alert(123) }} className="custom"> Hello </Button>
-        <Button disabled> Disabled Button </Button>
-        <Button btnType={ButtonType.Primary} size={ButtonSize.Large}> Large Primary </Button>
-        <Button btnType={ButtonType.Danger} size={ButtonSize.Small}> Small Danger </Button>
-        <Button btnType={ButtonType.Link} href="http://www.baidu.com" target="_blank"> Baidu Link </Button>
-        <Button btnType={ButtonType.Link} href="http://www.baidu.com" disabled> Disabled Link </Button>
+        <Button size="sm" onClick={() => { setShow(!show) }}>Toggle</Button>
+        <Transition
+          in={show}
+          timeout={300}
+          animation="zoom-in-left"
+        >
+          <div>
+            <p> Edit <code>src/App.tsx</code> and save to reload.</p>
+            <p> Edit <code>src/App.tsx</code> and save to reload.</p>
+            <p> Edit <code>src/App.tsx</code> and save to reload.</p>
+            <p> Edit <code>src/App.tsx</code> and save to reload.</p>
+            <p> Edit <code>src/App.tsx</code> and save to reload.</p>
+          </div>
+        </Transition>
+        <Transition
+          in={show}
+          timeout={300}
+          animation="zoom-in-top"
+          wrapper
+        >
+          <Button btnType="primary" size='lg'>A Large Button</Button>
+        </Transition>
         <p> learn react </p>
       </header>
     </div>
