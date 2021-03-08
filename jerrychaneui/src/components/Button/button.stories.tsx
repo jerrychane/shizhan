@@ -1,13 +1,12 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import { withInfo } from '@storybook/addon-info'
 import Button from './button'
 
-const styles: React.CSSProperties = {
-    // textAlign: 'center',
-}
-const CenterDecorator = (stroyFn: any) => <div style={styles}>{stroyFn()}</div>
+// const styles: React.CSSProperties = {
+//     // textAlign: 'center',
+// }
+// const CenterDecorator = (stroyFn: any) => <div style={styles}>{stroyFn()}</div>
 
 const defaultButton = () => {
     return <Button onClick={action('clicked')}> default button </Button>
@@ -26,13 +25,6 @@ const buttonWithType = () => (
     </>
 )
 storiesOf('Button Component', module)
-    .addDecorator(withInfo)
-    .addParameters({
-        info: {
-            inline: true
-        }
-    })
-    .addDecorator(CenterDecorator)
-    .add('Button', defaultButton)
-    .add('不同尺寸的 Button', buttonWithSize, { info: { inline: false } })
+    .add('默认的Button', defaultButton)
+    .add('不同尺寸的 Button', buttonWithSize)
     .add('不同类型的 Button', buttonWithType)
