@@ -5,6 +5,7 @@ import Menu from './components/Menu/menu'
 import MenuItem from './components/Menu/menuItem'
 import SubMenu from './components/Menu/subMenu'
 import Icon from './components/Icon/icon'
+import Input from './components/Input/input'
 import Transition from './components/Transiton/transition'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
@@ -59,6 +60,14 @@ function App() {
           <Button btnType="primary" size='lg'>A Large Button</Button>
         </Transition>
         <p> learn react </p>
+        <div style={{ width: "33.33%" }}>
+
+          <Input disabled />
+          <Input size="sm" />
+          <Input size="lg" />
+          <Input prepend="http://" />
+          <Input append=".com" />
+        </div>
       </header>
     </div>
   );
