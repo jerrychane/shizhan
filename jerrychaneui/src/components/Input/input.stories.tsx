@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions'
 import { Input } from './input'
 
 const ControllerInput = () => {
-    const [value, setValue] = useState()
+    const [value, setValue] = useState('')
     return <Input value={value} defaultValue={value} onChange={(e) => { setValue(e.target.value) }} />
 }
 
