@@ -5,6 +5,7 @@ import { MenuContext } from './menu'
 import { MenuItemProps } from './menuItem'
 import Icon from '../Icon/icon'
 import Transition from '../Transiton/transition'
+import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 
 export interface SubMenuProps {
     index?: string;
@@ -65,7 +66,7 @@ const SubMenu: React.FC<SubMenuProps> = ({ index, title, children, className }) 
         <li key={index} className={classes} {...hoverEvents}>
             <div className='submenu-title' onClick={handleClick} {...clickEvents}>
                 {title}
-                <Icon icon="angle-down" className="arrow-icon" />
+                <Icon icon={faAngleDown} className="arrow-icon" />
             </div>
 
             {renderChildren()}
