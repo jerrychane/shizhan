@@ -41,7 +41,7 @@ describe('test Button component', () => {
         expect(element).toHaveClass('btn-primary btn-lg klass')
     })
     it('should render a link when btnType equals link and href is provided', () => {
-        const wrapper = render(<Button btnType={ButtonType.Link} href="https://jerrychane.com" >Link</Button>)
+        const wrapper = render(<Button btnType="link" href="https://jerrychane.com" >Link</Button>)
         const element = wrapper.getByText('Link')
         expect(element).toBeInTheDocument()
         expect(element.tagName).toEqual('A')
