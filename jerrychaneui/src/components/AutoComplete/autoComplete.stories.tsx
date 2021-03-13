@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import { AutoComplete, DataSourceTpye } from './autoComplete'
+import { AutoComplete, DataSourceType } from './autoComplete'
 interface LakerPlayerProps {
     value: string;
     number: number
@@ -20,14 +20,23 @@ const SimpleComplete = () => {
         { value: 'howard', number: 39 },
         { value: 'kuzma', number: 0 },
     ]
+    // const handleFecth = (query: string) => {
+    //     return lakers.filter(name => name.includes(query)).map(name => ({ value: name }))
+    // }
+
     const handleFecth = (query: string) => {
-        return lakers.filter(name => name.includes(query)).map(name => ({ value: name }))
+        return fetch(`https://api.github.com/search/users?q=${query}`)
+            .then(res => res.json())
+            .then(({ items }) => {
+                console.log(items)
+                return items.slice(0, 10).map((item: any) => ({ value: item.login, ...item }))
+            })
     }
     // const handleFecth = (query: string) => {
     //     return lakersWithNumber.filter(player => player.value.includes(query))
     // }
-    // const renderOption = (item: DataSourceTpye) => {
-    //     const itemWithNumber = item as DataSourceTpye<LakerPlayerProps>
+    // const renderOption = (item: DataSourceType) => {
+    //     const itemWithNumber = item as DataSourceType<LakerPlayerProps>
     //     return (
     //         <>
     //             <h2>Name:{item.value}</h2>

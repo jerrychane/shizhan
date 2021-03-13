@@ -4,18 +4,19 @@ import Input, { InputProps } from '../Input/input';
 interface DataSourceObject {
     value: string;
 }
-export type DataSourceTpye<T = {}> = T & DataSourceObject
+export type DataSourceType<T = {}> = T & DataSourceObject
 
 export interface AutoCompleteProps extends Omit<InputProps, 'onSelect'> {
-    fetchSuggestions: (str: string) => DataSourceTpye[];
-    onSelect?: (item: DataSourceTpye) => void;
-    renderOption?: (item: DataSourceTpye) => ReactElement;
+    // 联合类型 DataSourceType or Promise
+    fetchSuggestions: (str: string) => DataSourceType[] | Promise<DataSourceType[]>;
+    onSelect?: (item: DataSourceType) => void;
+    renderOption?: (item: DataSourceType) => ReactElement;
 };
 
 export const AutoComplete: FC<AutoCompleteProps> = (props) => {
     const { fetchSuggestions, onSelect, value, renderOption, ...resProps } = props
     const [inputValue, setInputValue] = useState(value)
-    const [suggestions, setSuggestions] = useState<DataSourceTpye[]>([])
+    const [suggestions, setSuggestions] = useState<DataSourceType[]>([])
 
     console.log(suggestions)
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -23,25 +24,34 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
         setInputValue(value)
         if (value) {
             const results = fetchSuggestions(value)
-            setSuggestions(results)
+            console.log('results', results)
+            if (results instanceof Promise) {
+                console.log('trigger')
+                results.then(data => {
+                    setSuggestions(data)
+                })
+            } else {
+                setSuggestions(results)
+            }
         } else {
             setSuggestions([])
         }
     }
-    const handleSelect = (item: DataSourceTpye) => {
+    const handleSelect = (item: DataSourceType) => {
         setInputValue(item.value)
         setSuggestions([])
         if (onSelect) {
             onSelect(item)
         }
     }
-    const renderTemplate = (item: DataSourceTpye) => {
+    const renderTemplate = (item: DataSourceType) => {
         return renderOption ? renderOption(item) : item.value
     }
     const generatorDropdown = () => {
         return (
             <ul>
-                {suggestions.map((item, index) => {
+                {Array.isArray(suggestions) && suggestions.map((item, index) => {
+                    console.log('item', item)
                     return (
                         <li key={index} onClick={() => handleSelect(item)}>
                             {renderTemplate(item)}
@@ -58,7 +68,7 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
                 onChange={handleChange}
                 {...resProps}
             />
-            {(suggestions.length > 0) && generatorDropdown()}
+            {(Array.isArray(suggestions) && suggestions.length > 0) && generatorDropdown()}
         </div>
     )
 };
