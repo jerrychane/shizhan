@@ -1,4 +1,5 @@
-import React, { FC, useState, ChangeEvent, ReactElement, useEffect } from 'react';
+import React, { FC, useState, ChangeEvent, KeyboardEvent, ReactElement, useEffect } from 'react';
+import classNames from 'classnames'
 import Input, { InputProps } from '../Input/input';
 import Icon from '../Icon/icon'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
@@ -21,6 +22,7 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
     const [inputValue, setInputValue] = useState(value as string)
     const [suggestions, setSuggestions] = useState<DataSourceType[]>([])
     const [loading, setLoading] = useState(false)
+    const [hightlightIndex, setHighlightIndex] = useState(-1)
     const debounceValue = useDebounce(inputValue, 500)
     useEffect(() => {
         if (debounceValue) {
@@ -38,8 +40,40 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
         } else {
             setSuggestions([])
         }
+        setHighlightIndex(-1)
     }, [debounceValue])
     console.log(suggestions)
+    const highlight = (index: number) => {
+        if (index < 0) index = 0
+        if (index >= suggestions.length) {
+            index = suggestions.length - 1
+        }
+        setHighlightIndex(index)
+    }
+    const handleOnKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+        switch (e.keyCode) {
+            // enter
+            case 13:
+                if (suggestions[hightlightIndex]) {
+                    handleSelect(suggestions[hightlightIndex])
+                }
+                break;
+            // up
+            case 38:
+                highlight(hightlightIndex - 1)
+                break;
+            // down
+            case 40:
+                highlight(hightlightIndex + 1)
+                break;
+            // esc
+            case 27:
+                setSuggestions([])
+                break;
+            default:
+                break;
+        }
+    }
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.trim()
         setInputValue(value)
@@ -58,8 +92,11 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
         return (
             <ul>
                 {Array.isArray(suggestions) && suggestions.map((item, index) => {
+                    const cnames = classNames('suggestion-item', {
+                        'item-highlighted': index === hightlightIndex
+                    })
                     return (
-                        <li key={index} onClick={() => handleSelect(item)}>
+                        <li key={index} className={cnames} onClick={() => handleSelect(item)}>
                             {renderTemplate(item)}
                         </li>
                     )
@@ -72,6 +109,7 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
             <Input
                 value={inputValue}
                 onChange={handleChange}
+                onKeyDown={handleOnKeyDown}
                 {...resProps}
             />
             {loading && <ul><Icon icon={faSpinner} spin /></ul>}
