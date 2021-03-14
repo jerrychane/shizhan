@@ -4,7 +4,12 @@ import { action } from '@storybook/addon-actions'
 import { AutoComplete, DataSourceType } from './autoComplete'
 interface LakerPlayerProps {
     value: string;
-    number: number
+    number: number;
+}
+interface GithubUserProps {
+    login?: string;
+    url?: string;
+    avatar_url?: string;
 }
 const SimpleComplete = () => {
     const lakers = ['bradley', 'pope', 'caruso', 'cook', 'cousins', 'james', 'AD', 'green', 'howard', 'kuzma', 'McGee', 'rando']
@@ -28,28 +33,27 @@ const SimpleComplete = () => {
         return fetch(`https://api.github.com/search/users?q=${query}`)
             .then(res => res.json())
             .then(({ items }) => {
-                console.log(items)
                 return items.slice(0, 10).map((item: any) => ({ value: item.login, ...item }))
             })
     }
     // const handleFecth = (query: string) => {
     //     return lakersWithNumber.filter(player => player.value.includes(query))
     // }
-    // const renderOption = (item: DataSourceType) => {
-    //     const itemWithNumber = item as DataSourceType<LakerPlayerProps>
-    //     return (
-    //         <>
-    //             <h2>Name:{item.value}</h2>
-    //             <p>Number:{itemWithNumber.number}</p>
-    //         </>
-    //     )
-    // }
+    const renderOption = (item: DataSourceType<GithubUserProps>) => {
+        // const itemWithNumber = item as DataSourceType<LakerPlayerProps>
+        return (
+            <>
+                <h2>Name:{item.login}</h2>
+                <p>url:{item.url}</p>
+            </>
+        )
+    }
     return (
         <>
             <AutoComplete
                 fetchSuggestions={handleFecth}
                 onSelect={action('selected')}
-            // renderOption={renderOption}
+                renderOption={renderOption}
             />
         </>
     )
