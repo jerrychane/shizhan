@@ -49,10 +49,11 @@ export const Input: FC<InputProps> = (props) => {
             {icon && <div className="icon-wrapper"><Icon icon={icon} title={`title-${icon}`} /></div>}
             <input
                 className="viking-input-inner"
+                type="text"
                 disabled={disabled}
                 {...restProps}
             />
-            {append && <div className="viking-input-group-append">{append}</div>}
+            {append && <div className="viking-input-group-append">{append || ''}</div>}
         </div>
     )
 }

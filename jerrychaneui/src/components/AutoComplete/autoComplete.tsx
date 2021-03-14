@@ -2,6 +2,7 @@ import React, { FC, useState, ChangeEvent, KeyboardEvent, ReactElement, useEffec
 import classNames from 'classnames'
 import Input, { InputProps } from '../Input/input';
 import Icon from '../Icon/icon'
+import Transition from '../Transition/transition'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import useDebounce from '../../hooks/useDebounce'
 import useClickOutside from '../../hooks/useClickOutside'
@@ -23,8 +24,9 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
     const [inputValue, setInputValue] = useState(value as string)
     const [suggestions, setSuggestions] = useState<DataSourceType[]>([])
     const [loading, setLoading] = useState(false)
-    const [hightlightIndex, setHighlightIndex] = useState(-1)
+    const [highlightIndex, setHighlightIndex] = useState(-1)
     const triggerSearch = useRef(false)
+    const [showDropdown, setShowDropdown] = useState(false)
     const componentRef = useRef<HTMLDivElement>(null)
     const debounceValue = useDebounce(inputValue, 500)
     useClickOutside(componentRef, () => { setSuggestions([]) })
@@ -37,12 +39,19 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
                 results.then(data => {
                     setSuggestions(data)
                     setLoading(false)
+                    if (data.length > 0) {
+                        setShowDropdown(true)
+                    }
                 })
             } else {
+                setShowDropdown(true)
                 setSuggestions(results)
+                if (results.length > 0) {
+                    setShowDropdown(true)
+                }
             }
         } else {
-            setSuggestions([])
+            setShowDropdown(false)
         }
         setHighlightIndex(-1)
     }, [debounceValue])
@@ -58,21 +67,21 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
         switch (e.keyCode) {
             // enter
             case 13:
-                if (suggestions[hightlightIndex]) {
-                    handleSelect(suggestions[hightlightIndex])
+                if (suggestions[highlightIndex]) {
+                    handleSelect(suggestions[highlightIndex])
                 }
                 break;
             // up
             case 38:
-                highlight(hightlightIndex - 1)
+                highlight(highlightIndex - 1)
                 break;
             // down
             case 40:
-                highlight(hightlightIndex + 1)
+                highlight(highlightIndex + 1)
                 break;
             // esc
             case 27:
-                setSuggestions([])
+                setShowDropdown(false)
                 break;
             default:
                 break;
@@ -85,7 +94,7 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
     }
     const handleSelect = (item: DataSourceType) => {
         setInputValue(item.value)
-        setSuggestions([])
+        setShowDropdown(false)
         if (onSelect) {
             onSelect(item)
         }
@@ -96,30 +105,43 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
     }
     const generatorDropdown = () => {
         return (
-            <ul>
-                {Array.isArray(suggestions) && suggestions.map((item, index) => {
-                    const cnames = classNames('suggestion-item', {
-                        'item-highlighted': index === hightlightIndex
-                    })
-                    return (
-                        <li key={index} className={cnames} onClick={() => handleSelect(item)}>
-                            {renderTemplate(item)}
-                        </li>
-                    )
-                })}
-            </ul>
+            <Transition
+                in={showDropdown || loading}
+                animation="zoom-in-top"
+                timeout={300}
+                onExited={() => { setSuggestions([]) }}
+            >
+                <ul className="viking-suggestion-list">
+                    {loading &&
+                        <div className="suggstions-loading-icon">
+                            <Icon icon="spinner" spin />
+                        </div>
+                    }
+                    {suggestions.map((item, index) => {
+                        const cnames = classNames('suggestion-item', {
+                            'is-active': index === highlightIndex
+                        })
+                        return (
+                            <li key={index} className={cnames} onClick={() => handleSelect(item)}>
+                                {renderTemplate(item)}
+                            </li>
+                        )
+                    })}
+                </ul>
+            </Transition>
         )
     }
     return (
         <div className="viking-auto-complete" ref={componentRef}>
             <Input
-                value={inputValue}
+                value={inputValue || ''}
                 onChange={handleChange}
                 onKeyDown={handleOnKeyDown}
                 {...resProps}
             />
-            {loading && <ul><Icon icon={faSpinner} spin /></ul>}
-            {(Array.isArray(suggestions) && suggestions.length > 0) && generatorDropdown()}
+            {/* {loading && <ul><Icon icon={faSpinner} spin /></ul>}
+            {(Array.isArray(suggestions) && suggestions.length > 0) && generatorDropdown()} */}
+            {generatorDropdown()}
         </div>
     )
 };

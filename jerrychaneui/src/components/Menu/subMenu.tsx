@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import { MenuContext } from './menu'
 import { MenuItemProps } from './menuItem'
 import Icon from '../Icon/icon'
-import Transition from '../Transiton/transition'
+import Transition from '../Transition/transition'
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 
 export interface SubMenuProps {
