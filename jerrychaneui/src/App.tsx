@@ -1,14 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import axios from 'axios'
 
 const App: React.FC = () => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (files) {
+      const uploadedFile = files[0]
+      const formData = new FormData()
+      formData.append(uploadedFile.name, uploadedFile)
+      axios.post('http://jsonplaceholder.typicode.com/posts', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(resp => {
+        console.log(resp)
+      })
+    }
+  }
   return (
     <div className="App" style={{ marginTop: '100px', marginLeft: '100px' }}>
-      <form method="post" encType="multipart/form-data" action="http://jsonplaceholder.typicode.com/posts">
-        <input type="file" name="myFile" />
-        <button type="submit">Submit</button>
-      </form>
-
+      <input type="file" name="myFile" onChange={handleFileChange} />
     </div>
   )
 }
