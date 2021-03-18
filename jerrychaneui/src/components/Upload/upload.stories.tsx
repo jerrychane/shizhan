@@ -23,8 +23,8 @@ const SimpleUpload = () => {
             onSuccess={action('success')}
             onError={action('error')}
             onChange={action('changed')}
-            // beforeUpload={checkFileSize}
-            beforeUpload={filePromise}
+        // beforeUpload={checkFileSize}
+        // beforeUpload={filePromise}
         />
     )
 }
