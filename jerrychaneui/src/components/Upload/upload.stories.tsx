@@ -2,6 +2,8 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { Upload, UploadFile } from './upload'
+import Icon from '../Icon/icon'
+import { faUpload } from '@fortawesome/free-solid-svg-icons'
 
 const defaultFileList: UploadFile[] = [
     { uid: '123', size: 1234, name: 'hello.md', status: 'uploading', percent: 30 },
@@ -35,9 +37,14 @@ const SimpleUpload = () => {
             headers={{ 'X-Powerd-By': 'vikingship' }}
             accept={'.jpg'}
             multiple
+            drag
         // beforeUpload={checkFileSize}
         // beforeUpload={filePromise}
-        />
+        >
+            <Icon icon={faUpload} size="5x" theme="secondary" />
+            <br />
+            <p>Drag file over to upload</p>
+        </Upload>
     )
 }
 
