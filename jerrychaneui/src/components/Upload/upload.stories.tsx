@@ -30,6 +30,11 @@ const SimpleUpload = () => {
             onChange={action('changed')}
             defaultFileList={defaultFileList}
             onRemove={action('removed')}
+            name="fileName"
+            data={{ 'key': 'value' }}
+            headers={{ 'X-Powerd-By': 'vikingship' }}
+            accept={'.jpg'}
+            multiple
         // beforeUpload={checkFileSize}
         // beforeUpload={filePromise}
         />
