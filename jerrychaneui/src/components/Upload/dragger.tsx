@@ -13,7 +13,7 @@ export const Dragger: FC<DraggerProps> = (props) => {
     const handleDrop = (e: DragEvent<HTMLElement>, over: boolean) => {
         e.preventDefault()
         setDragOver(false)
-        onFile(e.dataTransfer.files)
+        // onFile(e.dataTransfer.files)
     }
     const handleDrag = (e: DragEvent<HTMLElement>, over: boolean) => {
         e.preventDefault()
@@ -24,7 +24,7 @@ export const Dragger: FC<DraggerProps> = (props) => {
             className={klass}
             onDragOver={e => { handleDrag(e, true) }}
             onDragLeave={e => { handleDrag(e, false) }}
-            onDrop={handleDrop}
+        // onDrop={handleDrop}
         >
 
         </div>
