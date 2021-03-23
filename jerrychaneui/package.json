@@ -2,6 +2,9 @@
   "name": "jerrychaneui",
   "version": "0.1.0",
   "private": true,
+  "main":"build/index.js",
+  "modules":"build/index.js",
+  "types": "build/index.d.ts",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.26",
     "@fortawesome/free-solid-svg-icons": "^5.12.0",
@@ -25,7 +28,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "clean":"rimraf ./build",
+    "clean": "rimraf ./build",
     "build": "npm run clean && npm run build-ts && npm run build-css",
     "build-ts": "tsc -p tsconfig.build.json",
     "build-css": "node-sass ./src/styles/index.scss ./build/index.css",
